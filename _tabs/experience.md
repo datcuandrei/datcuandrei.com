@@ -7,7 +7,7 @@ order: 3
 Everything related to my experience, including past and current jobs, certifications, etc.
 <br>
 **Workplaces**
-<img src="https://scriptics.ro/img/scriptics-team-img.ab2150b0.svg" width=150 height=150>
+<img src="/assets/images/scriptics.png" width=150 height=150>
 
 **DevOps Engineer · Scriptics Decisions SRL**<br>
 Full-time<br>
@@ -36,7 +36,7 @@ Maintaning and deploying services on a large scale of servers:
 - Automated security and uptime reports for clients, written in Python using Greenbone's and UptimeRobot's API
 <br>
 
-<img src="https://www.carlogos.org/tire-logos/continental-logo-gold-jumping-horse.png" width=150 height=150>
+<img src="/assets/images/continental.png" width=150 height=150>
 
 
 **Information Technology Operations · Continental AG**<br>
