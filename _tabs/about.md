@@ -43,4 +43,4 @@ Today, my focus is on crafting the most stable, secure and efficient UNIX or UNI
 * Bash
 * Terraform
 
-You can explore some of my practical applications on my [experience page](/_tabs/experience.md). Acquiring new skills comes naturally to me, as I am a quick learner. My ability to grasp concepts rapidly, coupled with my intuition, allows me to adapt and learn effectively on the go.
+Acquiring new skills comes naturally to me, as I am a quick learner. My ability to grasp concepts rapidly, coupled with my intuition, allows me to adapt and learn effectively on the go.
