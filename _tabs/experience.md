@@ -1,7 +1,7 @@
 ---
 layout: page
 icon: fas fa-archive
-order: 3
+order: 2
 ---
 
 Everything related to my experience, including past and current jobs, certifications, etc.
@@ -53,7 +53,7 @@ Key responsibilities:
 - Scripting and programing: Basic scripting and automation tasks (Powershell, Bash, C#...etc.)
 
 
-<h1 style="font-family:impact;color:red;font-size:80px">TAEGSM</h1>
+<div align=center><h1 style="font-family:impact;color:red;font-size:80px">TAEGSM</h1></div>
 
 **GSM/IT Tehnician · GSM & Auto La Tae SRL**<br>
 Part-time<br>
