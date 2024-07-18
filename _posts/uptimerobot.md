@@ -1,0 +1,62 @@
+---
+layout: post
+title:  "UptimeRobot API Vulnerability Disclosure."
+---
+
+UptimeRobot API Vulnerability Disclosure.
+---
+No authentication access to custom page API vulnerability.
+
+**Backstory**<br>
+In a recent task I was assigned, I had to do an automation which included the use of UptimeRobot's API. I was writing it in Python and I needed a way to connect to the API without the use of credentials. Using the requests  library, I have created a function which takes a valid session's cookies, hardcoded headers to spoof a real desktop browser user agent and return the response using the parsed data. <br>
+
+**UptimeRobot's cookie system**<br>
+In the following screenshot, you can see that there are a lot of cookies, including user consent for cookies, psp session, user ID, access token, etc. But you would be surprised to find out that none of them actually held any factual information. The only cookie that validates a login was the one containing the status page ID:<br>
+
+![Screenshot](http://datcuandrei.com/content/images/2024/07/Screenshot-2024-07-11-at-09.47.21-1.png)
+> For this example, I've created a dummy custom status page. This is **NOT** the actual ID of the page I was trying to access.
+
+Take into consideration the fact that if a page has a custom domain (which was my case), it *doesn't* contain the ID of the page in the URL.
+
+Example:
+
+|||
+|--------------------|--------------------|
+| **Normal Status Page** | **Custom Status Page** |
+| https://stats.uptimerobot.com/qgwIlMcn0T | https://customuptime.domain.tld |
+
+Notice in the following images the difference in the URL tab: 
+
+![Normal Status Page](http://datcuandrei.com/content/images/2024/07/Screenshot-2024-07-11-at-10.01.48.png)
+> Normal Status Page (dummy example; deleted by now)
+
+![Custom Status Page](http://datcuandrei.com/content/images/2024/07/Screenshot-2024-07-11-at-09.59.12-1.png)
+> Custom Status Page (domain blurred for privacy concerns)
+
+
+
+**Returning to Backstory**<br>
+Seeing as the only cookie needed was the status page ID, I've passed only that one in the function. It worked as intended, but something was odd. Even after the supposed expiration date of the authentication cookie, I was still able to access the API data. Out of curiosity, I have changed one character in the 26 character-long cookie and it still worked. Only using less than 26 characters would render an invalid login. 
+
+With this in mind, I tried using a curl on the API of the status page without passing any kind of cookies or headers and this is the output:<br>
+
+![gif](http://datcuandrei.com/content/images/2024/06/final.gif)
+> Segments of this GIF are blurred to hide sensitive data.
+> JQ was used to parse the JSON.
+
+
+I've immediately emailed UptimeRobot to disclose the vulnerability. It was a critical one that could lead to potential private information being accessed by an unauthorized third-party. 
+Fortunately, the team was quick to reply:<br>
+
+![Email Screenshot](http://datcuandrei.com/content/images/2024/07/Screenshot-2024-07-11-at-10.12.10.png)
+
+
+The vulnerability was discovered and reported on May 17th 2024. By the end of May 2024, it was fixed.
+
+At the moment, if you try accessing the API without a valid login, you will get the following JSON:
+
+```JSON
+{
+  "error": "Not Authenticated"
+}
+```
