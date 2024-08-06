@@ -7,6 +7,8 @@ order: 2
 Everything related to my experience, including past and current jobs, certifications, etc.
 <br>
 **Workplaces**
+<br>
+
 <img src="/assets/images/scriptics.png" alt="Scriptics" width=150 height=150>
 
 **DevOps Engineer · Scriptics Decisions SRL**<br>
