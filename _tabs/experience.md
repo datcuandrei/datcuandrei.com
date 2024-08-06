@@ -4,12 +4,7 @@ icon: fas fa-archive
 order: 2
 ---
 
-Everything related to my experience, including past and current jobs, certifications, etc.
-<br>
-**Workplaces**
-<br>
-
-<img src="/assets/images/scriptics.png" alt="Scriptics" width=150 height=150>
+<div style="text-align: left"><img src="/assets/images/scriptics.png" alt="Scriptics" width=150 height=150></div>
 
 **DevOps Engineer · Scriptics Decisions SRL**<br>
 Full-time<br>
@@ -38,7 +33,7 @@ Maintaning and deploying services on a large scale of servers:
 - Automated security and uptime reports for clients, written in Python using Greenbone's and UptimeRobot's API
 <br>
 
-<img src="/assets/images/continental.png" alt="Continental" width=150 height=150>
+<div style="text-align: left"><img src="/assets/images/continental.png" alt="Continental" width=150 height=150></div>
 
 
 **Information Technology Operations · Continental AG**<br>
@@ -55,7 +50,7 @@ Key responsibilities:
 - Scripting and programing: Basic scripting and automation tasks (Powershell, Bash, C#...etc.)
 
 
-<div align=center><h1 style="font-family:impact;color:red;font-size:80px">TAEGSM</h1></div>
+<div align=left><h1 style="font-family:impact;color:red;font-size:80px">TAEGSM</h1></div>
 
 **GSM/IT Tehnician · GSM & Auto La Tae SRL**<br>
 Part-time<br>
