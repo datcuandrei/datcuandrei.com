@@ -4,8 +4,6 @@ icon: fas fa-archive
 order: 2
 ---
 
-_In case you are looking for a traditional resume, you can find it [here](/assets/misc/Resume-Andrei-Datcu.pdf)._
-
 <div style="text-align: left"><img src="/assets/images/scriptics.png" alt="Scriptics" width=150 height=150></div>
 
 **DevOps Engineer · Scriptics Decisions SRL**<br>
