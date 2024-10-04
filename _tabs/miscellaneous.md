@@ -1,13 +1,10 @@
 ---
 layout: page
-icon: fas gear
+icon: fas fa-gear
 order: 4
 math: true
 mermaid: true
 ---
-
-<!-- markdownlint-capture -->
-<!-- markdownlint-disable -->
 
 Miscellaneous tools or projects I've written. You can also find them on GitHub.
 
@@ -59,6 +56,3 @@ Experiments
 -----------
 - [fedora-container](https://github.com/datcuandrei/fedora-container)<br>
 bootc compatible template. This is just experimenting with osbuild bootc in Podman.<br>
-
-<!-- markdownlint-restore -->
-
