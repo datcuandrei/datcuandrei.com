@@ -1,6 +1,6 @@
 ---
 layout: page
-icon: fas fa-gear
+icon: fas fa-terminal
 order: 4
 math: true
 mermaid: true
@@ -22,12 +22,14 @@ OpenCore `1.0.0` EFI for my old Hackintosh.<br>
 Tools
 -----
 - [muks](https://github.com/datcuandrei/muks)<br>
-LUKS on macOS (both Intel and Apple Silicon).<br>
+LUKS on macOS (both Intel and Apple Silicon).
+
 > This project is still work in progress!
 {: .prompt-info }
 
 - [silver-disco](https://github.com/datcuandrei/silver-disco)<br>
-Ansible Playbook for strong encryption ciphers and algorithms for different UNIX tools.<br>
+Ansible Playbook for strong encryption ciphers and algorithms for different UNIX tools.
+
 > This project is still work in progress!
 {: .prompt-info }
 
@@ -35,12 +37,14 @@ Ansible Playbook for strong encryption ciphers and algorithms for different UNIX
 Quick and dirty bootable Windows USB drive creator for macOS. Written in a few hours (hence the <i>quick and dirty</i> naming), it's main purpose isn't to be beautiful, just <b>functional</b>. <br>
 
 - [MacLinuxUtils](https://github.com/datcuandrei/MacLinuxUtils)<br>
-FOSS Alternative of macOS apps like Mac Fan Control,smcFanControl and Turbo Boost Switcher,but for Linux.<br>
+FOSS Alternative of macOS apps like Mac Fan Control,smcFanControl and Turbo Boost Switcher,but for Linux.
+
 > Uploaded for historical reasons. This project is outdated and it's not recommended you use it unless you know what you're doing. 
 {: .prompt-danger }
 
 - [BackToMac](https://github.com/datcuandrei/BackToMac)<br>
-An automated utility for Linux that creates bootable macOS USB sticks.<br>
+An automated utility for Linux that creates bootable macOS USB sticks.
+
 > Uploaded for historical reasons. This project is outdated and it's not recommended you use it unless you know what you're doing. 
 {: .prompt-danger }
 
