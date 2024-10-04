@@ -6,21 +6,25 @@ math: true
 mermaid: true
 ---
 
-Miscellaneous tools or projects I've written. You can also find them on GitHub.
+## Configs
+{: data-toc-skip='' .mt-4 .mb-0 }
 
-Configs
--------
 - [dotfiles](https://github.com/datcuandrei/dotfiles)<br>
 Dotfiles for my two configs: `osx` and `linux`.<br>
 Similar in appearance and functionality (to an extent), but totally different in terms of packages.<br>
 On `linux`, my WM is `i3` with `py3status`, while on `osx` I use `yabai` with `spacebar`.<br>
 
 - [OpenCore-H410M-K](https://github.com/datcuandrei/OpenCore-H410M-K)<br>
-OpenCore `1.0.0` EFI for my old Hackintosh.<br>
+OpenCore `1.0.0` EFI for my old Hackintosh.
+
+> This EFI is still recent, but it will not be maintained since I don't have this Hackintosh anymore. Therefore, use it with caution, update the kexts. I don't guarantee that it will work
+{: .prompt-warning }
 
 
-Tools
------
+
+## Tools
+{: data-toc-skip='' .mt-4 .mb-0 }
+
 - [muks](https://github.com/datcuandrei/muks)<br>
 LUKS on macOS (both Intel and Apple Silicon).
 
@@ -48,15 +52,17 @@ An automated utility for Linux that creates bootable macOS USB sticks.
 > Uploaded for historical reasons. This project is outdated and it's not recommended you use it unless you know what you're doing. 
 {: .prompt-danger }
 
-Scripts
--------
+## Scripts
+{: data-toc-skip='' .mt-4 .mb-0 }
+
 - [kext-update-checker](https://github.com/datcuandrei/kext-update-checker)<br>
 A simple Python script to check if there are new stable updates for your kexts.<br>
 
 - [build_kernel](https://github.com/datcuandrei/build_kernel)<br>
 Quick script to download and compile the latest stable Linux kernel.<br>
 
-Experiments
------------
+## Experiments
+{: data-toc-skip='' .mt-4 .mb-0 }
+
 - [fedora-container](https://github.com/datcuandrei/fedora-container)<br>
 bootc compatible template. This is just experimenting with osbuild bootc in Podman.<br>
