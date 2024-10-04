@@ -1,7 +1,9 @@
 ---
 layout: page
-icon: fas rectangle-terminal
+icon: fas gear
 order: 4
+math: true
+mermaid: true
 ---
 
 <!-- markdownlint-capture -->
