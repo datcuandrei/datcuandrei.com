@@ -73,12 +73,12 @@ devices.
 **Certifications**<br>
 
 ![Linux.png](/assets/images/Linux-2.png)
-> **Linux Certification** from Programming Hub
+_**Linux Certification** from Programming Hub_
     
 ![Docker.png](/assets/images/Docker.png)
-> **Docker Certification** from Programming Hub
+_**Docker Certification** from Programming Hub_
 
 ![PostgreSQL.png](/assets/images/PostgreSQL.png)
-> **PostgreSQL Certification** from Programming Hub
+_**PostgreSQL Certification** from Programming Hub_
 
 
