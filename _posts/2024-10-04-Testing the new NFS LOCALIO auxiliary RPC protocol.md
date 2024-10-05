@@ -99,6 +99,7 @@ make -j$(nproc) 2>&1 | tee log
 ```
 
 And off it goes! Compiling the kernel means patience, so grab yourself a cup of tee, or a beer if that's more your thing and enjoy the output.
+<br>
 ![Compiling kernel](/assets/images/compiling_rc_kernel.png)
 _Compiling kernel..._
 
@@ -120,7 +121,7 @@ _Side-by-side comparison of NFS kernel config._
 
 
 ## Running a NFS Server container
-To save time (and annoyances), we will be using an already created image, specifically ![ghcr.io/obeone/nfs-server](https://github.com/obeone/docker-nfs-server). It is a simple, lightweight Alpine Linux image that support NFS v3,v4 with the option to map `nfsd` inside the container for the server to run.
+To save time (and annoyances), we will be using an already created image, specifically [ghcr.io/obeone/nfs-server](https://github.com/obeone/docker-nfs-server). It is a simple, lightweight Alpine Linux image that support NFS v3,v4 with the option to map `nfsd` inside the container for the server to run.
 
 The following command was used to start the container:
 ```bash
@@ -162,7 +163,7 @@ Unfortunately, no, even with a bridged network connection, we are achieving the 
 ## Why does LOCALIO (currently) only work in containerized environments?
 If you've played around with OCI containers for a bit, you most likely have noticed that they work totally different from a fully fledged VM. That is because, compared to a VM, they lack many components of a real OS, like standalone kernel modules. Earlier, I've mentioned that the kernel that Debian comes with doesn't have `CONFIG_NFSD` enabled, and that is a crucial component in this whole experiment, because `nfsd` is a kernel module. You probably already can tell where I'm going with this.
 
-If you've tried before to create a NFS server in a container, you have likely been hit by tons of errors. That's because you cannot use `nfsd` in a container, _unless_ you mount it from your host. The handshake that is done to reliably determine if the client and server run on the same host is done through it. ![here is how the handshake works in a technical manner](https://www.kernel.org/doc/html/latest/filesystems/nfs/localio.html#nfs-common-and-client-server-handshake).
+If you've tried before to create a NFS server in a container, you have likely been hit by tons of errors. That's because you cannot use `nfsd` in a container, _unless_ you mount it from your host. The handshake that is done to reliably determine if the client and server run on the same host is done through it. [here is how the handshake works in a technical manner](https://www.kernel.org/doc/html/latest/filesystems/nfs/localio.html#nfs-common-and-client-server-handshake).
 
 I am not a software engineer by any means, but here is the way I see the handshake work: when establishing the connection, the LOCALIO module comes in; the NFS client then generates an UUID that will be checked by the NFS server for security reasons. Once verified that it is a unique and secure connection, it is passed through a module named `nfs_common`, which maintains a list of these UUIDs that point to the server's memory. This is basically how `UUID_IS_LOCAL` works, if it turns out as true, then the client has direct access to the server's memory, bypassing RPC.
 
