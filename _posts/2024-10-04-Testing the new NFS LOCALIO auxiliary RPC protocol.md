@@ -6,9 +6,22 @@ date: 2024-10-06 01:07:00 +0300
 pin: false
 ---
 
-## Introduction
+# Table of Contents
 {: data-toc-skip='' .mt-4 .mb-0 }
-During the last merge window for kernel, a couple commits have been made regarding a new protocol for the NFS filesystem with documentation (see [this one](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92945bd81ca4) and [FAQ](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f7128262b152)). This is very important, as this new protocol is supposed to allow the NFS client and server to reliably handshake to detect if they are running on the same host.
+
+- [Introduction](#introduction)
+- [Benchmarks from commiter](#benchmarks-from-commiter)
+- [Testing LOCALIO](#testing-localio)
+	- [Compiling-the-kernel](#compiling-the-kernel)
+	- [Running a NFS Server container](#running-a-nfs-server-container)
+	- [Giving LOCALIO a spin](#giving-localio-a-spin)
+- [Theorizing VM and hypervisor interaction](#theorizing-vm-and-hypervisor-interaction)
+	- [Why does LOCALIO (currently) only work in containerized environments?](#why-does-localio-currently-only-work-in-containerized-environments)
+- [Conclusion](#conclusion)
+
+## Introduction 
+{: data-toc-skip='' .mt-4 .mb-0 }
+During the last merge window for the 6.12 Linux kernel, a couple commits have been made regarding a new protocol for the NFS filesystem with documentation (see [this one](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92945bd81ca4) and [FAQ](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f7128262b152)). This is very important, as this new protocol is supposed to allow the NFS client and server to reliably handshake to detect if they are running on the same host.
 
 ## Benchmarks from comitter
 {: data-toc-skip='' .mt-4 .mb-0 }
@@ -61,7 +74,7 @@ For the purposes of this test, I will have two similar QEMU VMs with the specs o
 > Also, we will use OCI containers, specifically, we will use Docker as the means to configure them.The NFS Server will be installed in the container, while the NFS Client will be the host. 
 {: .prompt-info }
 
-## Compiling the kernel
+### Compiling the kernel
 {: data-toc-skip='' .mt-4 .mb-0 }
 
 - For the kernel itself, I have used the 6.1.0 kernel config, but updated:
@@ -120,15 +133,17 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 _Side-by-side comparison of NFS kernel config._
 
 
-## Running a NFS Server container
-To save time (and annoyances), we will be using an already created image, specifically [ghcr.io/obeone/nfs-server](https://github.com/obeone/docker-nfs-server). It is a simple, lightweight Alpine Linux image that support NFS v3,v4 with the option to map `nfsd` inside the container for the server to run.
+### Running a NFS Server container
+{: data-toc-skip='' .mt-4 .mb-0 }
+To save time (and annoyances), we will be using an already created image, specifically [ghcr.io/obeone/nfs-server](https://github.com/obeone/docker-nfs-server). It is a simple, lightweight Alpine Linux image that supports NFS v3,v4 with the option to map `nfsd` inside the container for the server to run.
 
 The following command was used to start the container:
 ```bash
 sudo docker run -dit --privileged -v /nfstest -e NFS_EXPORT_0='/nfstest *(rw,no_subtree_check,no_root_squash)' -p 2049:2049 --name nfs-server ghcr.io/obeone/nfs-server
 ```
 
-## Giving LOCALIO a spin.
+### Giving LOCALIO a spin.
+{: data-toc-skip='' .mt-4 .mb-0 }
 After mounting the NFS servers in `/media/nfstest` and testing whether they work or not, we can measure the performance of LOCALIO using `fio`:
 ```bash
 fio --name=DEBVM[no] --size=1G --filename=DEBVM[no]FILE --ioengine=libaio --direct=1 --bs=4k --iodepth=64 --readwrite=randrw --rwmixread=75 --gtod_reduce=1 --randrepeat=1
@@ -145,6 +160,7 @@ With a whopping `13.9k IOPS read / 4630 IOPS write` on the LOCALIO-enabled kerne
 But this is all in a containerized environment. How about testing on, let's say, a hypervisor and a VM?
 
 ## Theorizing VM and hypervisor interaction
+{: data-toc-skip='' .mt-4 .mb-0 }
 Since Docker is basically a virtualized environment relying on the host for the network, wouldn't it be possible to achieve the same results between a VM and hypervisor?
 
 Well, let's look at the container setup we've made earlier. The network that the Docker environment was using is the default one, with the port shared between the container and VM. On the QEMU VM, we have a virtual network for the host too by using the default NAT named `virbr0`. So in theory, it should work, right?
@@ -160,7 +176,8 @@ Hmm... that doesn't seem to be working. Maybe since there is no way for the VM t
 
 Unfortunately, no, even with a bridged network connection, we are achieving the exact same results. That is because it defeats the purpose of this protocol.
 
-## Why does LOCALIO (currently) only work in containerized environments?
+### Why does LOCALIO (currently) only work in containerized environments?
+{: data-toc-skip='' .mt-4 .mb-0 }
 If you've played around with OCI containers for a bit, you most likely have noticed that they work totally different from a fully fledged VM. That is because, compared to a VM, they lack many components of a real OS, like standalone kernel modules. Earlier, I've mentioned that the kernel that Debian comes with doesn't have `CONFIG_NFSD` enabled, and that is a crucial component in this whole experiment, because `nfsd` is a kernel module. You probably already can tell where I'm going with this.
 
 If you've tried before to create a NFS server in a container, you have likely been hit by tons of errors. That's because you cannot use `nfsd` in a container, _unless_ you mount it from your host. The handshake that is done to reliably determine if the client and server run on the same host is done through it. [here is how the handshake works in a technical manner](https://www.kernel.org/doc/html/latest/filesystems/nfs/localio.html#nfs-common-and-client-server-handshake).
@@ -170,7 +187,8 @@ I am not a software engineer by any means, but here is the way I see the handsha
 So this is why the network itself doesn't matter, it is `nfsd` that matters. If it is the same on both the server and client (which works between a container and it's host due to the container's lack of kernel modules), then LOCALIO works. This is why VMs and hypervisors won't work. 
 
 ## Conclusion
-There are certain use cases for this protocol, especially when you have a container that needs to run an IO job local to the host, you'll gain an enormous boost in performance. But if you are looking for more, or you were hoping for VM interactions, then I'm sorry to disappoint you, it's not there *yet*.\
+{: data-toc-skip='' .mt-4 .mb-0 }
+There are certain use cases for this protocol, especially when you have a container that needs to run an IO job local to the host, you'll gain an enormous boost in performance. But if you are looking for more, or you were hoping for VM interactions, then I'm sorry to disappoint you, it's not there *yet*.
 
 <script src="https://giscus.app/client.js"
         data-repo="datcuandrei/datcuandrei.com"
