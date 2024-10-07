@@ -4,20 +4,8 @@ title:  "Testing the new NFS LOCALIO auxiliary RPC protocol"
 description: "Useful? Or just a cool concept?"
 date: 2024-10-06 01:07:00 +0300
 pin: false
+toc: true
 ---
-
-# Table of Contents
-{: data-toc-skip='' .mt-4 .mb-0 }
-
-- [Introduction](#introduction)
-- [Benchmarks from commiter](#benchmarks-from-commiter)
-- [Testing LOCALIO](#testing-localio)
-	- [Compiling-the-kernel](#compiling-the-kernel)
-	- [Running a NFS Server container](#running-a-nfs-server-container)
-	- [Giving LOCALIO a spin](#giving-localio-a-spin)
-- [Theorizing VM and hypervisor interaction](#theorizing-vm-and-hypervisor-interaction)
-	- [Why does LOCALIO (currently) only work in containerized environments?](#why-does-localio-currently-only-work-in-containerized-environments)
-- [Conclusion](#conclusion)
 
 ## Introduction 
 {: data-toc-skip='' .mt-4 .mb-0 }
